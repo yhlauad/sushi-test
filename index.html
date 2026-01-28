@@ -234,8 +234,10 @@
                     <button class="category-tab active" data-category="all">全部</button>
                     <button class="category-tab" data-category="握壽司">握壽司</button>
                     <button class="category-tab" data-category="軍艦・卷物">軍艦・卷物</button>
-                    <button class="category-tab" data-category="炸物・側食">炸物・側食</button>
-                    <button class="category-tab" data-category="甜點・飲料">甜食・飲品</button>
+                    <button class="category-tab" data-category="嚴選二貫">嚴選二貫</button>
+                    <button class="category-tab" data-category="副餐類">副餐類</button>
+                    <button class="category-tab" data-category="麵類・湯類">麵類・湯類</button>
+                    <button class="category-tab" data-category="甜品・飲料">甜品・飲料</button>
                 </div>
 
                 <div id="sushi-grid" class="sushi-grid">
@@ -290,6 +292,22 @@
                 <div class="modal-actions">
                     <button id="cancel-edit-name" class="text-btn">取消</button>
                     <button id="confirm-edit-name" class="primary-btn">確認</button>
+                </div>
+            </div>
+            <div id="consumed-list-modal" class="modal-content" style="display: none;">
+                <div class="modal-header">
+                    <h3>已選擇項目</h3>
+                    <button id="clear-all-consumed" class="clear-btn-text">全部清空</button>
+                </div>
+                <div id="consumed-items-list" class="consumed-items-list">
+                    <!-- Items will be injected here -->
+                </div>
+                <div class="modal-footer-summary">
+                    <div class="total-row">
+                        <span>總計卡路里</span>
+                        <span id="modal-total-cal">0 kcal</span>
+                    </div>
+                    <button id="close-consumed-modal" class="primary-btn">返回追蹤器</button>
                 </div>
             </div>
         </div>

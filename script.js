@@ -368,11 +368,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         filtered.forEach(sushi => {
             const card = document.createElement('div');
-            const isSelected = state.consumedSushi.some(item => item.sushi_name === sushi.sushi_name);
-            card.className = `sushi-card ${isSelected ? 'selected' : ''}`;
+            const consumedItem = state.consumedSushi.find(item => item.sushi_name === sushi.sushi_name);
+            const count = consumedItem ? consumedItem.count : 0;
+
+            card.className = `sushi-card ${count > 0 ? 'selected' : ''}`;
             card.innerHTML = `
                 <div class="add-btn-circle">
-                    <i class="fas ${isSelected ? 'fa-check' : 'fa-plus'}"></i>
+                    <i class="fas fa-plus"></i>
+                    ${count > 0 ? `<span class="portion-badge">${count}</span>` : ''}
                 </div>
                 <img src="${sushi.image_url}" alt="${sushi.sushi_name}" onerror="this.src='https://placehold.co/200x160?text=${encodeURIComponent(sushi.sushi_name)}'">
                 <div class="sushi-info">
@@ -381,24 +384,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
 
-            card.onclick = () => toggleSushi(sushi);
+            card.onclick = () => addSushi(sushi);
             grid.appendChild(card);
         });
     }
 
-    function toggleSushi(sushi) {
-        const index = state.consumedSushi.findIndex(item => item.sushi_name === sushi.sushi_name);
-        if (index > -1) {
-            state.consumedSushi.splice(index, 1);
+    function addSushi(sushi) {
+        const item = state.consumedSushi.find(item => item.sushi_name === sushi.sushi_name);
+        if (item) {
+            item.count++;
         } else {
-            state.consumedSushi.push({ ...sushi, id: Date.now() });
+            state.consumedSushi.push({ ...sushi, count: 1 });
         }
         updateCalorieUI();
         renderSushiGrid();
     }
 
+    function removeSushi(sushiName) {
+        const index = state.consumedSushi.findIndex(item => item.sushi_name === sushiName);
+        if (index > -1) {
+            if (state.consumedSushi[index].count > 1) {
+                state.consumedSushi[index].count--;
+            } else {
+                state.consumedSushi.splice(index, 1);
+            }
+        }
+        updateCalorieUI();
+        renderSushiGrid();
+        renderConsumedModal();
+    }
+
     function updateCalorieUI() {
-        const total = state.consumedSushi.reduce((sum, item) => sum + item.calories, 0);
+        const total = state.consumedSushi.reduce((sum, item) => sum + (item.calories * item.count), 0);
         state.totalCalories = total;
         const remaining = Math.max(state.calorieGoal - total, 0);
 
@@ -408,7 +425,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update Footer
         document.getElementById('footer-remaining').textContent = remaining.toLocaleString();
-        document.getElementById('footer-count').textContent = state.consumedSushi.length;
+        const totalPortions = state.consumedSushi.reduce((sum, item) => sum + item.count, 0);
+        document.getElementById('footer-count').textContent = totalPortions;
 
         // Progress ring
         const circle = document.getElementById('calorie-progress');
@@ -426,8 +444,59 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('尚未選擇項目');
             return;
         }
-        const list = state.consumedSushi.map(s => `• ${s.sushi_name} (${s.calories} kcal)`).join('\n');
-        alert(`已選項目（共 ${state.consumedSushi.length} 碟）：\n\n${list}\n\n總計: ${state.totalCalories} kcal`);
+        renderConsumedModal();
+        modalOverlay.style.display = 'flex';
+        document.getElementById('consumed-list-modal').style.display = 'block';
+    };
+
+    function renderConsumedModal() {
+        const listContainer = document.getElementById('consumed-items-list');
+        listContainer.innerHTML = '';
+
+        state.consumedSushi.forEach(item => {
+            const row = document.createElement('div');
+            row.className = 'consumed-row';
+            row.innerHTML = `
+                <img src="${item.image_url}" alt="${item.sushi_name}">
+                <div class="consumed-row-info">
+                    <div class="consumed-row-name">${item.sushi_name}</div>
+                    <div class="consumed-row-cal">${item.calories} kcal/份</div>
+                </div>
+                <div class="consumed-qty-control">
+                    <button class="qty-btn minus" data-name="${item.sushi_name}"><i class="fas fa-minus"></i></button>
+                    <span class="qty-val">${item.count}</span>
+                    <button class="qty-btn plus" data-name="${item.sushi_name}"><i class="fas fa-plus"></i></button>
+                </div>
+            `;
+
+            row.querySelector('.qty-btn.minus').onclick = () => removeSushi(item.sushi_name);
+            row.querySelector('.qty-btn.plus').onclick = () => {
+                addSushi(item);
+                renderConsumedModal();
+            };
+
+            listContainer.appendChild(row);
+        });
+
+        document.getElementById('modal-total-cal').textContent = `${state.totalCalories} kcal`;
+
+        if (state.consumedSushi.length === 0) {
+            modalOverlay.style.display = 'none';
+        }
+    }
+
+    document.getElementById('close-consumed-modal').onclick = () => {
+        modalOverlay.style.display = 'none';
+        document.getElementById('consumed-list-modal').style.display = 'none';
+    };
+
+    document.getElementById('clear-all-consumed').onclick = () => {
+        if (confirm('確定要清空所有已選壽司嗎？')) {
+            state.consumedSushi = [];
+            updateCalorieUI();
+            renderSushiGrid();
+            modalOverlay.style.display = 'none';
+        }
     };
 
     // Goal configuration
@@ -448,9 +517,13 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 
-    document.getElementById('clear-calories').onclick = () => {
-        state.consumedSushi = [];
-        updateCalorieUI();
-        renderSushiGrid();
-    };
+    // Handle initial state if any
+    const clearBtn = document.getElementById('clear-calories');
+    if (clearBtn) {
+        clearBtn.onclick = () => {
+            state.consumedSushi = [];
+            updateCalorieUI();
+            renderSushiGrid();
+        };
+    }
 });
