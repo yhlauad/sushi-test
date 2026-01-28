@@ -200,17 +200,18 @@
                             <circle id="calorie-progress" class="progress-ring-fill" stroke="var(--primary-red)"
                                 stroke-width="12" stroke-linecap="round" fill="transparent" r="70" cx="80" cy="80" />
                         </svg>
-                        <div class="progress-content">
+                        <div id="edit-goal-trigger" class="progress-content clickable">
                             <span id="total-calories">0</span>
-                            <span class="goal-label">/ 1500 KCAL</span>
+                            <span class="goal-label">/ <span id="goal-display">1500</span> KCAL</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="calorie-summary-card">
-                    <div class="summary-item">
+                    <div id="goal-summary-item" class="summary-item clickable">
                         <span class="label">今日目標</span>
-                        <div class="value">1,500 <span class="unit">kcal</span></div>
+                        <div class="value"><span id="summary-goal-display">1,500</span> <span class="unit">kcal</span>
+                        </div>
                     </div>
                     <div class="divider"></div>
                     <div class="summary-item highlight">
@@ -261,7 +262,7 @@
     <!-- Modals -->
     <div id="modal-overlay" class="modal-overlay">
         <div class="modal">
-            <div id="custom-plate-modal" class="modal-content">
+            <div id="custom-plate-modal" class="modal-content" style="display: none;">
                 <h3>自定義金額</h3>
                 <div class="input-wrapper custom-input-wrapper">
                     <span class="prefix">$</span>
@@ -306,15 +307,25 @@
                     </div>
                     <button id="close-consumed-modal" class="primary-btn">返回追蹤器</button>
                 </div>
-                <div id="clear-calories-confirm-modal" class="modal-content" style="display: none;">
-                    <h3>清空卡路里紀錄</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 24px;">確定要清空所有已選壽司嗎？此動作無法復原。</p>
-                    <div class="modal-actions" style="justify-content: space-between;">
-                        <button id="cancel-clear-calories" class="secondary-btn"
-                            style="margin: 0; width: 45%;">取消</button>
-                        <button id="confirm-clear-calories" class="primary-btn"
-                            style="margin: 0; width: 45%;">確定</button>
-                    </div>
+            </div>
+
+            <div id="clear-calories-confirm-modal" class="modal-content" style="display: none;">
+                <h3>清空卡路里紀錄</h3>
+                <p style="color: var(--text-muted); margin-bottom: 24px;">確定要清空所有已選壽司嗎？此動作無法復原。</p>
+                <div class="modal-actions" style="justify-content: space-between;">
+                    <button id="cancel-clear-calories" class="secondary-btn" style="margin: 0; width: 45%;">取消</button>
+                    <button id="confirm-clear-calories" class="primary-btn" style="margin: 0; width: 45%;">確定</button>
+                </div>
+            </div>
+
+            <div id="edit-goal-modal" class="modal-content" style="display: none;">
+                <h3>修改今日目標</h3>
+                <div class="input-wrapper custom-input-wrapper">
+                    <input type="number" id="new-goal-input" placeholder="例如: 2000" step="50" min="500">
+                </div>
+                <div class="modal-actions">
+                    <button id="cancel-goal-edit" class="text-btn">取消</button>
+                    <button id="confirm-goal-edit" class="primary-btn">確認</button>
                 </div>
             </div>
         </div>

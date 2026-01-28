@@ -49,6 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('edit-name-modal').style.display = 'none';
         document.getElementById('consumed-list-modal').style.display = 'none';
         document.getElementById('clear-calories-confirm-modal').style.display = 'none';
+        document.getElementById('edit-goal-modal').style.display = 'none';
+        modalOverlay.style.display = 'none';
     }
 
     // --- Setup Screen Logic ---
@@ -450,6 +452,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const offset = circumference - (Math.min(total / state.calorieGoal, 1) * circumference);
         circle.style.strokeDashoffset = isNaN(offset) ? circumference : offset;
+
+        // Update Goal Displays
+        const goalDisplays = ['goal-display', 'summary-goal-display'];
+        goalDisplays.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = state.calorieGoal.toLocaleString();
+        });
     }
 
     // Modal logic for consumed list
@@ -458,6 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('尚未選擇項目');
             return;
         }
+        hideAllModals();
         renderConsumedModal();
         modalOverlay.style.display = 'flex';
         document.getElementById('consumed-list-modal').style.display = 'block';
@@ -519,12 +529,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('cancel-clear-calories').onclick = () => {
         hideAllModals();
+        renderConsumedModal();
         document.getElementById('consumed-list-modal').style.display = 'block';
         modalOverlay.style.display = 'flex';
     };
 
-    // Goal configuration
-    state.calorieGoal = 1500;
+    // Goal configuration logic
+    function openEditGoalModal() {
+        hideAllModals();
+        document.getElementById('new-goal-input').value = state.calorieGoal;
+        document.getElementById('edit-goal-modal').style.display = 'block';
+        modalOverlay.style.display = 'flex';
+        setTimeout(() => document.getElementById('new-goal-input').select(), 100);
+    }
+
+    const editGoalTrigger = document.getElementById('edit-goal-trigger');
+    if (editGoalTrigger) editGoalTrigger.onclick = openEditGoalModal;
+
+    const goalSummaryItem = document.getElementById('goal-summary-item');
+    if (goalSummaryItem) goalSummaryItem.onclick = openEditGoalModal;
+
+    document.getElementById('cancel-goal-edit').onclick = hideAllModals;
+
+    document.getElementById('confirm-goal-edit').onclick = () => {
+        const input = document.getElementById('new-goal-input');
+        const newVal = parseInt(input.value);
+        if (!isNaN(newVal) && newVal >= 500) {
+            state.calorieGoal = newVal;
+            updateCalorieUI();
+            hideAllModals();
+        } else {
+            alert('請輸入合理的卡路里目標（至少 500 kcal）');
+        }
+    };
 
     // Search and Filters
     document.getElementById('sushi-search').oninput = (e) => {

@@ -1000,6 +1000,20 @@ header h1 {
     font-weight: 700;
 }
 
+.clickable {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.clickable:active {
+    transform: scale(0.95);
+}
+
+.calorie-summary-card .summary-item.clickable:hover {
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 12px;
+}
+
 /* Calorie Summary Card */
 .calorie-summary-card {
     background: white;
