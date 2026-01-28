@@ -46,12 +46,9 @@
                     開始用餐 <i class="fas fa-utensils"></i>
                 </button>
 
-                <div class="calorie-entrance">
-                    <p>關心健康？</p>
-                    <button id="open-calorie-tracker" class="link-btn">
-                        <i class="fas fa-fire-alt"></i> 前往卡路里計算器
-                    </button>
-                </div>
+                <button id="open-calorie-tracker" class="secondary-btn">
+                    <i class="fa-solid fa-dumbbell"></i> 進入卡路里追蹤
+                </button>
             </main>
         </section>
 
@@ -309,11 +306,20 @@
                     </div>
                     <button id="close-consumed-modal" class="primary-btn">返回追蹤器</button>
                 </div>
+                <div id="clear-calories-confirm-modal" class="modal-content" style="display: none;">
+                    <h3>清空卡路里紀錄</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 24px;">確定要清空所有已選壽司嗎？此動作無法復原。</p>
+                    <div class="modal-actions" style="justify-content: space-between;">
+                        <button id="cancel-clear-calories" class="secondary-btn"
+                            style="margin: 0; width: 45%;">取消</button>
+                        <button id="confirm-clear-calories" class="primary-btn"
+                            style="margin: 0; width: 45%;">確定</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script src="script.js"></script>
+        <script src="script.js"></script>
 </body>
 
 </html>

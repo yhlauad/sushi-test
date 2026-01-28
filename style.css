@@ -822,18 +822,25 @@ header h1 {
 
 .secondary-btn {
     width: calc(100% - 48px);
-    margin: 0 24px;
-    padding: 16px;
-    background: #F2F2F7;
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
+    margin: 16px 24px 0;
+    padding: 20px;
+    background: white;
+    border: 1.5px solid #D1D9E6;
+    border-radius: 18px;
+    font-size: 18px;
     font-weight: 700;
-    color: #48484A;
+    color: #6C7A8F;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.secondary-btn:active {
+    transform: scale(0.98);
+    background: #F8F9FB;
 }
 
 /* Modals */
@@ -1027,6 +1034,11 @@ header h1 {
 
 .summary-item.highlight .value {
     color: #FF3B30;
+}
+
+.summary-item.negative .value {
+    color: var(--primary-red);
+    text-shadow: 0 0 10px rgba(230, 0, 18, 0.2);
 }
 
 .summary-item .unit {
