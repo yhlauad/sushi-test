@@ -31,6 +31,7 @@ body {
     max-width: 450px;
     margin: 0 auto;
     min-height: 100vh;
+    min-height: 100dvh;
     background-color: white;
     position: relative;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.02);
@@ -584,7 +585,7 @@ header h1 {
     width: 100%;
     max-width: 450px;
     background: white;
-    padding: 20px 24px;
+    padding: 12px 20px;
     border-top: 1px solid var(--border-color);
     box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05);
     z-index: 100;
@@ -594,7 +595,7 @@ header h1 {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .grand-total-section .label {
@@ -612,13 +613,13 @@ header h1 {
 }
 
 .total-amount-row .currency {
-    font-size: 24px;
-    margin-top: 8px;
-    margin-right: 4px;
+    font-size: 18px;
+    margin-top: 4px;
+    margin-right: 2px;
 }
 
 .total-amount-row #grand-total {
-    font-size: 48px;
+    font-size: 36px;
     line-height: 1;
 }
 

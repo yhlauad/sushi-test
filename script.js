@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- State ---
     let state = {
         currentScreen: 'setup-screen',
-        dinerCount: 4,
+        dinerCount: 2,
         diners: [], // { id: 'A', name: 'Member 1' }
         meals: [],  // { id, name, price, payers: ['A', 'B'] }
         serviceChargeRate: 0.1,
@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         Object.values(screens).forEach(s => s.classList.remove('active'));
         screens[screenId.replace('-screen', '')].classList.add('active');
         state.currentScreen = screenId;
+        window.scrollTo(0, 0);
     }
 
     function hideAllModals() {
@@ -69,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     document.getElementById('start-dining').onclick = () => {
+        requestFullScreen();
         state.diners = [];
         for (let i = 0; i < state.dinerCount; i++) {
             state.diners.push({
@@ -89,7 +91,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (state.sushiData.length === 0) {
             loadSushiData();
         }
+        updateCalorieUI();
     };
+
+    function requestFullScreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => {
+                console.log(`Error attempting to enable full-screen mode: ${err.message}`);
+            });
+        }
+    }
 
     document.getElementById('back-to-setup-from-cal').onclick = () => {
         showScreen('setup-screen');
@@ -196,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="history-item-name edit-trigger" data-meal-id="${meal.id}">${meal.name}</div>
                         <div class="history-item-time">${meal.time}</div>
                     </div>
-                    <div class="history-item-price">$${meal.price.toFixed(2)}</div>
+                    <div class="history-item-price">$${meal.price.toFixed(0)}</div>
                 </div>
                 <div class="history-item-payers">
                     <span class="payer-label">付款人：</span>
@@ -268,11 +279,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        const serviceCharge = total * state.serviceChargeRate;
+        const serviceCharge = Math.ceil(total * state.serviceChargeRate);
         const grandTotal = total + serviceCharge;
 
-        grandTotalEl.textContent = grandTotal.toFixed(2);
-        serviceChargeEl.textContent = `+$${serviceCharge.toFixed(2)}`;
+        grandTotalEl.textContent = grandTotal.toFixed(0);
+        serviceChargeEl.textContent = `+$${serviceCharge.toFixed(0)}`;
 
         // Render individual bubbles
         dinerTotalsRow.innerHTML = '';
@@ -284,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
             div.className = `diner-total-card ${finalTotal > 0 ? 'highlight' : ''}`;
             div.innerHTML = `
                 <div class="card-circle">${d.id}</div>
-                <div class="card-amount">$${finalTotal.toFixed(1)}</div>
+                <div class="card-amount">$${finalTotal.toFixed(0)}</div>
             `;
             dinerTotalsRow.appendChild(div);
         });
