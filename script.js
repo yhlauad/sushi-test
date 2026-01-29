@@ -70,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     document.getElementById('start-dining').onclick = () => {
-        requestFullScreen();
         state.diners = [];
         for (let i = 0; i < state.dinerCount; i++) {
             state.diners.push({
@@ -93,14 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         updateCalorieUI();
     };
-
-    function requestFullScreen() {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(err => {
-                console.log(`Error attempting to enable full-screen mode: ${err.message}`);
-            });
-        }
-    }
 
     document.getElementById('back-to-setup-from-cal').onclick = () => {
         showScreen('setup-screen');
