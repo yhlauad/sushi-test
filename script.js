@@ -347,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadSushiData() {
         console.log('Fetching sushi data...');
         try {
-            const response = await fetch('sushiro-calories.json');
+            const response = await fetch('sushiro-jp-calories.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (state.searchQuery.trim() !== "") {
                 return matchesSearch; // Global search overrides category
             }
-            const matchesCategory = state.currentCategory === 'all' || sushi.category === state.currentCategory;
+            const matchesCategory = state.currentCategory === 'all' || sushi.cat === state.currentCategory;
             return matchesCategory;
         });
 
