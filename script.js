@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sushiData: [],
         consumedSushi: [], // { sushi_name, calories, id }
         totalCalories: 0,
-        calorieGoal: 2000,
+        calorieGoal: 1000,
         currentCategory: 'all',
         searchQuery: ''
     };
@@ -384,7 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <i class="fas fa-plus"></i>
                     ${count > 0 ? `<span class="portion-badge">${count}</span>` : ''}
                 </div>
-                <img src="${sushi.image_url}" alt="${sushi.sushi_name}" onerror="this.src='https://placehold.co/200x160?text=${encodeURIComponent(sushi.sushi_name)}'">
+                <img src="${sushi.image_url || 'placeholder.png'}" alt="${sushi.sushi_name}" onerror="this.src='placeholder.png'">
                 <div class="sushi-info">
                     <div class="sushi-name">${sushi.sushi_name}</div>
                     <div class="sushi-calories"><i class="fas fa-fire"></i> ${sushi.calories} KCAL</div>
