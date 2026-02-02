@@ -261,6 +261,30 @@
     <!-- Modals -->
     <div id="modal-overlay" class="modal-overlay">
         <div class="modal">
+            <!-- Social Follow Modal -->
+            <div id="social-follow-modal" class="modal-content" style="display: none;">
+                <div style="text-align: center;">
+                    <i class="fas fa-heart"
+                        style="color: var(--primary-red); font-size: 44px; margin-bottom: 16px;"></i>
+                    <h3>追蹤我們的最新動態</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 14px; line-height: 1.6;">
+                        感謝使用壽司計算器！<br>歡迎追蹤我們的社交媒體以獲取更多有用資訊。
+                    </p>
+                    <div class="social-links"
+                        style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+                        <a href="https://www.instagram.com/sinaihk/" target="_blank" class="social-link-btn ig">
+                            <i class="fab fa-instagram"></i> Follow on Instagram
+                        </a>
+                        <a href="https://www.threads.net/@sinaihk" target="_blank" class="social-link-btn threads">
+                            <i class="fa-solid fa-at"></i> Follow on Threads
+                        </a>
+                    </div>
+                    <button id="close-social-modal" class="primary-btn" style="width: 100%; margin: 0;">
+                        開始使用
+                    </button>
+                </div>
+            </div>
+
             <div id="custom-plate-modal" class="modal-content" style="display: none;">
                 <h3>自定義金額</h3>
                 <div class="input-wrapper custom-input-wrapper">
