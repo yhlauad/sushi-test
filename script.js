@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('consumed-list-modal').style.display = 'none';
         document.getElementById('clear-calories-confirm-modal').style.display = 'none';
         document.getElementById('edit-goal-modal').style.display = 'none';
+        document.getElementById('social-modal').style.display = 'none';
         modalOverlay.style.display = 'none';
     }
 
@@ -589,4 +590,16 @@ document.addEventListener('DOMContentLoaded', () => {
             renderSushiGrid();
         };
     }
+
+    // --- Initial Load Logic ---
+    // Show social modal on first load
+    setTimeout(() => {
+        hideAllModals();
+        document.getElementById('social-modal').style.display = 'block';
+        modalOverlay.style.display = 'flex';
+    }, 500);
+
+    document.getElementById('close-social-modal').onclick = () => {
+        hideAllModals();
+    };
 });

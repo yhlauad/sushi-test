@@ -1410,3 +1410,76 @@ header h1 {
     width: 100%;
     margin: 0;
 }
+/* Social Modal Styles */
+#social-modal {
+    padding: 32px 24px;
+    text-align: center;
+}
+
+.social-header {
+    margin-bottom: 20px;
+}
+
+.sinai-logo {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 28px;
+    color: var(--primary-red);
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+}
+
+#social-modal h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.social-p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 28px;
+    line-height: 1.6;
+}
+
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.social-btn.instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white;
+}
+
+.social-btn.threads {
+    background: #000000;
+    color: white;
+}
+
+.social-btn:active {
+    transform: scale(0.97);
+    opacity: 0.9;
+}
+
+.social-close {
+    font-size: 14px;
+    color: var(--text-muted);
+    width: 100%;
+}
+
